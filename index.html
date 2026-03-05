@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Executive | Transporte Privado de Lujo</title>
+    
+    <!-- LIBRERÍA DE ÍCONOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* === ESTILOS BASE Y VARIABLES (DARK MODE PREMIUM) === */
+        :root {
+            --bg-main: #0a0a0a; /* Negro absoluto para el fondo */
+            --bg-card: #161616; /* Gris carbón para cajas */
+            --bg-input: #222222; /* Gris un poco más claro para inputs */
+            --accent-color: #D4AF37; /* Dorado Champagne */
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        body { color: var(--text-light); line-height: 1.6; background-color: var(--bg-main); }
+        a { text-decoration: none; color: inherit; }
+
+        /* === BOTÓN FLOTANTE WHATSAPP === */
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        .btn-whatsapp:hover { transform: scale(1.1); }
+
+        /* === NAVEGACIÓN === */
+        header { 
+            background-color: rgba(10, 10, 10, 0.9); 
+            backdrop-filter: blur(10px);
+            color: var(--text-light); 
+            padding: 20px 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: fixed; /* Fijo en la parte superior */
+            width: 100%;
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 1px solid #222;
+        }
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .logo span { color: var(--accent-color); }
+        nav ul { list-style: none; display: flex; gap: 20px; }
+        nav ul li a { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
+        nav ul li a:hover { color: var(--accent-color); }
+        .btn-header { background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px 20px; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 12px; transition: all 0.3s; }
+        .btn-header:hover { background-color: var(--accent-color); color: #000; }
+
+        /* === HERO SECTION GIGANTE (100vh) === */
+        .hero { 
+            /* Imagen de vehículo de lujo oscuro */
+            background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.9) 100%), url('https://images.unsplash.com/photo-1605515298946-d062f2e9da53?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat; 
+            color: var(--text-light); 
+            text-align: center; 
+            /* Aquí hacemos que ocupe el 100% de la pantalla */
+            height: 100vh; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px; 
+        }
+        .hero h1 { font-size: 4.5rem; margin-bottom: 20px; font-weight: 300; letter-spacing: 1px; max-width: 900px; line-height: 1.1; }
+        .hero p { font-size: 1.3rem; max-width: 650px; color: #cccccc; font-weight: 300; }
+
+        /* === WIDGET DE RESERVA (DARK MODE) === */
+        .booking-widget { 
+            background-color: var(--bg-card); 
+            max-width: 1000px; 
+            margin: -90px auto 60px auto; /* Sube sobre la imagen */
+            padding: 30px; 
+            border-radius: 8px; 
+            border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            position: relative; 
+            z-index: 10; 
+        }
+        .input-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; }
+        .input-group label { font-size: 12px; text-transform: uppercase; font-weight: bold; color: var(--text-muted); margin-bottom: 8px; }
+        
+        .input-group input, .input-group select { 
+            padding: 14px; 
+            background-color: var(--bg-input);
+            border: 1px solid #333; 
+            color: white;
+            border-radius: 4px; 
+            font-size: 15px; 
+            outline: none; 
+            transition: border-color 0.3s; 
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--accent-color); }
+        /* Cambiar el color del texto de placeholder en inputs oscuros */
+        ::placeholder { color: #666; }
+
+        .btn-submit { background-color: var(--accent-color); color: #000; border: none; padding: 14px 30px; font-size: 16px; font-weight: bold; text-transform: uppercase; cursor: pointer; border-radius: 4px; flex: 1; min-width: 200px; transition: background 0.3s; }
+        .btn-submit:hover { background-color: #bfa135; }
+        
+        #resultado-cotizacion { width: 100%; padding: 15px; margin-top: 15px; border-radius: 4px; font-weight: bold; text-align: center; display: none; transition: all 0.3s ease; }
+
+        /* === SECCIÓN COMÚN === */
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; font-weight: 300; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+
+        /* === SERVICIOS === */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { 
+            background: var(--bg-card); 
+            padding: 50px 30px; 
+            text-align: center; 
+            border-radius: 8px; 
+            border: 1px solid #222;
+            transition: transform 0.3s, border-color 0.3s; 
+        }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+        .service-card i { font-size: 45px; color: var(--accent-color); margin-bottom: 20px; }
+        .service-card h3 { margin: 15px 0; font-size: 1.3rem; color: white; }
+        .service-card p { color: var(--text-muted); }
+
+        /* === FLOTA === */
+        .fleet-section { background-color: #050505; border-top: 1px solid #222; border-bottom: 1px solid #222;}
+        .fleet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .fleet-card { background-color: var(--bg-card); padding: 30px; border-radius: 8px; text-align: center; border: 1px solid #222; }
+        .fleet-card h3 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.4rem;}
+        .fleet-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* === FOOTER === */
+        footer { background-color: var(--bg-main); color: #555; text-align: center; padding: 60px 20px; font-size: 14px; }
+        .social-icons { margin-top: 20px; }
+        .social-icons a { color: #555; font-size: 24px; margin: 0 15px; transition: color 0.3s; }
+        .social-icons a:hover { color: var(--accent-color); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 20px; position: absolute; }
+            .hero h1 { font-size: 2.8rem; margin-top: 60px; }
+            .hero p { font-size: 1.1rem; }
+            .booking-widget { margin-top: -40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN WHATSAPP -->
+    <a href="https://wa.me/5215555555555" target="_blank" class="btn-whatsapp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- NAVEGACIÓN -->
+    <header>
+        <div class="logo">MVP<span>EXECUTIVE</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#flota">Flota</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="btn-header">Iniciar Sesión</a>
+    </header>
+
+    <!-- HERO (100vh Full Screen) -->
+    <section class="hero">
+        <h1>El verdadero lujo es ser dueño de tu tiempo.</h1>
+        <p>Transporte ejecutivo de primer nivel. Confort, discreción y puntualidad garantizada en cada trayecto.</p>
+    </section>
+
+    <!-- WIDGET DE RESERVA (Modo Oscuro) -->
+    <div class="booking-widget">
+        <div class="input-group">
+            <label>Origen</label>
+            <input type="text" id="origen" placeholder="Ej. Polanco">
+        </div>
+        <div class="input-group">
+            <label>Destino</label>
+            <input type="text" id="destino" placeholder="Ej. Aeropuerto AICM">
+        </div>
+        <div class="input-group">
+            <label>Fecha y Hora</label>
+            <!-- Cambiamos el color del icono del calendario con un truco visual oscuro -->
+            <input type="datetime-local" style="color-scheme: dark;">
+        </div>
+        <div class="input-group">
+            <label>Pasajeros</label>
+            <select id="pasajeros">
+                <option value="1">1 Pasajero (Sedán)</option>
+                <option value="2">2-3 Pasajeros (Sedán/SUV)</option>
+                <option value="4">Grupo 4+ (Sprinter)</option>
+            </select>
+        </div>
+        <button id="btn-cotizar" class="btn-submit">Cotizar Viaje</button>
+        <div id="resultado-cotizacion"></div>
+    </div>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="container">
+        <h2 class="section-title">Soluciones de Movilidad</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-plane-arrival"></i>
+                <h3>Transfers de Aeropuerto</h3>
+                <p>Recepción personalizada (Meet & Greet), monitoreo en tiempo real de tu vuelo y tiempo de cortesía incluido.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-briefcase"></i>
+                <h3>Movilidad Corporativa</h3>
+                <p>Proyecta la mejor imagen ante tus socios comerciales. Traslados puntuales a reuniones y eventos.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-clock"></i>
+                <h3>Chofer por Horas</h3>
+                <p>Disposición total. Un vehículo premium y chofer asignado exclusivamente para tu agenda del día.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLOTA -->
+    <section id="flota" class="fleet-section">
+        <div class="container">
+            <h2 class="section-title">Nuestra Flota</h2>
+            <div class="fleet-grid">
+                <div class="fleet-card">
+                    <h3>Business Class</h3>
+                    <p>Sedanes Ejecutivos<br><span style="color:#777;">(Toyota Camry, VW Passat)</span></p>
+                </div>
+                <div class="fleet-card">
+                    <h3>First Class</h3>
+                    <p>Sedanes de Lujo<br><span style="color:#777;">(Mercedes-Benz Clase S, BMW Serie 7)</span></p>
+                </div>
+                <div class="fleet-card">
+                    <h3>Executive SUV</h3>
+                    <p>Camionetas Premium<br><span style="color:#777;">(Suburban, Cadillac Escalade)</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="logo" style="margin-bottom: 10px; color: white;">MVP<span style="color: var(--accent-color);">EXECUTIVE</span></div>
+        <p>&copy; 2026 MVP Executive Transport. Todos los derechos reservados.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DEL COTIZADOR -->
+    <script>
+        document.getElementById('btn-cotizar').addEventListener('click', function() {
+            const origen = document.getElementById('origen').value.trim();
+            const destino = document.getElementById('destino').value.trim();
+            const cajaResultado = document.getElementById('resultado-cotizacion');
+
+            if (origen === '' || destino === '') {
+                cajaResultado.style.display = 'block';
+                cajaResultado.style.backgroundColor = '#3b1c1e'; // Fondo rojo oscuro
+                cajaResultado.style.color = '#ff8a8a'; // Texto rojo claro
+                cajaResultado.style.border = '1px solid #721c24';
+                cajaResultado.innerHTML = '⚠️ Por favor, ingresa tu Origen y Destino para poder cotizar.';
+                return;
+            }
+
+            cajaResultado.style.display = 'block';
+            cajaResultado.style.backgroundColor = '#222';
+            cajaResultado.style.color = '#fff';
+            cajaResultado.style.border = '1px solid #444';
+            cajaResultado.innerHTML = '⏳ Calculando la mejor ruta y tarifa para ti...';
+
+            setTimeout(function() {
+                const precioBase = Math.floor(Math.random() * (2500 - 800 + 1)) + 800;
+                cajaResultado.style.backgroundColor = '#1e3323'; // Fondo verde oscuro
+                cajaResultado.style.color = '#90ee90'; // Texto verde claro
+                cajaResultado.style.border = '1px solid #28a745';
+                cajaResultado.innerHTML = `
+                    ✅ <strong>¡Ruta Calculada!</strong><br>
+                    El costo estimado de <span style="color:#fff;">${origen}</span> a <span style="color:#fff;">${destino}</span> es de <span style="font-size: 1.3rem; color: #D4AF37;">$${precioBase} MXN</span>.<br>
+                    <button style="margin-top: 15px; padding: 10px 20px; background: #D4AF37; color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase;">Proceder al Pago</button>
+                `;
+            }, 1500);
+        });
+    </script>
+
+</body>
+</html>
