@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MVP Executive | Transporte Privado de Lujo</title>
     
+    <!-- LIBRERÍA DE ÍCONOS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* === VARIABLES (DARK MODE PREMIUM) === */
         :root {
             --bg-main: #0a0a0a;
             --bg-card: #161616;
@@ -21,22 +23,35 @@
         body { color: var(--text-light); line-height: 1.6; background-color: var(--bg-main); }
         a { text-decoration: none; color: inherit; }
 
+        /* === WHATSAPP FLOTANTE === */
         .btn-whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; transition: transform 0.3s ease; }
         .btn-whatsapp-float:hover { transform: scale(1.1); }
 
-        header { background-color: rgba(10, 10, 10, 0.9); backdrop-filter: blur(10px); color: var(--text-light); padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #222; }
+        /* === NAVEGACIÓN === */
+        header { background-color: rgba(10, 10, 10, 0.9); backdrop-filter: blur(10px); color: var(--text-light); padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 100; border-bottom: 1px solid #222; }
         .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
         .logo span { color: var(--accent-color); }
         nav ul { list-style: none; display: flex; gap: 20px; }
         nav ul li a { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s ease; }
         nav ul li a:hover { color: var(--accent-color); }
+        
+        /* Contenedor derecho del Header (Redes + Botón) */
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        
+        /* Redes Sociales en el Header */
+        .header-socials { display: flex; gap: 15px; border-right: 1px solid #333; padding-right: 20px; }
+        .header-socials a { font-size: 16px; color: var(--text-light); transition: color 0.3s; }
+        .header-socials a:hover { color: var(--accent-color); transform: scale(1.1); }
+
         .btn-header { background-color: transparent; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px 20px; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 12px; transition: all 0.3s; }
         .btn-header:hover { background-color: var(--accent-color); color: #000; }
 
+        /* === HERO === */
         .hero { background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.9) 100%), url('https://images.unsplash.com/photo-1605515298946-d062f2e9da53?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat; color: var(--text-light); text-align: center; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 20px; }
         .hero h1 { font-size: 4.5rem; margin-bottom: 20px; font-weight: 300; letter-spacing: 1px; max-width: 900px; line-height: 1.1; }
         .hero p { font-size: 1.3rem; max-width: 650px; color: #cccccc; font-weight: 300; }
 
+        /* === WIDGET RESERVA === */
         .booking-widget { background-color: var(--bg-card); max-width: 1000px; margin: -90px auto 60px auto; padding: 30px; border-radius: 8px; border: 1px solid #333; box-shadow: 0 20px 40px rgba(0,0,0,0.5); display: flex; flex-wrap: wrap; gap: 15px; position: relative; z-index: 10; }
         .input-group { flex: 1; min-width: 200px; display: flex; flex-direction: column; }
         .input-group label { font-size: 12px; text-transform: uppercase; font-weight: bold; color: var(--text-muted); margin-bottom: 8px; }
@@ -49,6 +64,7 @@
         
         #resultado-cotizacion { width: 100%; padding: 20px; margin-top: 15px; border-radius: 4px; font-weight: bold; text-align: center; display: none; transition: all 0.3s ease; }
 
+        /* === SECCIONES === */
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; font-weight: 300; color: white; }
         .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
 
@@ -65,13 +81,21 @@
         .fleet-card h3 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.4rem;}
         .fleet-card p { font-size: 14px; color: var(--text-muted); }
 
+        /* === FOOTER === */
         footer { background-color: var(--bg-main); color: #555; text-align: center; padding: 60px 20px; font-size: 14px; }
-        .social-icons { margin-top: 20px; }
-        .social-icons a { color: #555; font-size: 24px; margin: 0 15px; transition: color 0.3s; }
-        .social-icons a:hover { color: var(--accent-color); }
+        .footer-socials { margin-top: 25px; display: flex; justify-content: center; gap: 20px; }
+        .footer-socials a { color: #555; font-size: 28px; transition: all 0.3s; }
+        /* Efecto hover con colores reales de las marcas */
+        .footer-socials a.ig:hover { color: #E1306C; transform: translateY(-3px); }
+        .footer-socials a.fb:hover { color: #1877F2; transform: translateY(-3px); }
+        .footer-socials a.li:hover { color: #0A66C2; transform: translateY(-3px); }
+        .footer-socials a.tk:hover { color: #fff; transform: translateY(-3px); }
+        .footer-socials a.yt:hover { color: #FF0000; transform: translateY(-3px); }
 
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             header { flex-direction: column; gap: 15px; padding: 20px; position: absolute; }
+            .header-socials { display: none; } /* Ocultamos las del menú en celular para ahorrar espacio */
             .hero h1 { font-size: 2.8rem; margin-top: 60px; }
             .hero p { font-size: 1.1rem; }
             .booking-widget { margin-top: -40px; }
@@ -80,10 +104,12 @@
 </head>
 <body>
 
+    <!-- BOTÓN WHATSAPP FLOTANTE -->
     <a href="https://wa.me/5215555555555" target="_blank" class="btn-whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- NAVEGACIÓN -->
     <header>
         <div class="logo">MVP<span>EXECUTIVE</span></div>
         <nav>
@@ -93,7 +119,17 @@
                 <li><a href="#flota">Flota</a></li>
             </ul>
         </nav>
-        <a href="#" class="btn-header">Iniciar Sesión</a>
+        
+        <!-- NUEVA ZONA DERECHA: REDES + BOTÓN -->
+        <div class="header-actions">
+            <!-- Íconos de redes en la barra superior -->
+            <div class="header-socials">
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <a href="#" class="btn-header">Iniciar Sesión</a>
+        </div>
     </header>
 
     <section class="hero">
@@ -113,7 +149,6 @@
         </div>
         <div class="input-group">
             <label>Fecha y Hora</label>
-            <!-- AÑADIMOS EL ID "FECHA" -->
             <input type="datetime-local" id="fecha" style="color-scheme: dark;">
         </div>
         <div class="input-group">
@@ -128,6 +163,7 @@
         <div id="resultado-cotizacion"></div>
     </div>
 
+    <!-- SERVICIOS -->
     <section id="servicios" class="container">
         <h2 class="section-title">Soluciones de Movilidad</h2>
         <div class="services-grid">
@@ -149,6 +185,7 @@
         </div>
     </section>
 
+    <!-- FLOTA -->
     <section id="flota" class="fleet-section">
         <div class="container">
             <h2 class="section-title">Nuestra Flota</h2>
@@ -169,26 +206,31 @@
         </div>
     </section>
 
+    <!-- FOOTER AMPLIADO CON REDES -->
     <footer>
         <div class="logo" style="margin-bottom: 10px; color: white;">MVP<span style="color: var(--accent-color);">EXECUTIVE</span></div>
         <p>&copy; 2026 MVP Executive Transport. Todos los derechos reservados.</p>
+        
+        <!-- REDES SOCIALES EN FOOTER -->
+        <div class="footer-socials">
+            <a href="#" class="ig" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="tk" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" class="li" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="yt" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        </div>
     </footer>
 
-    <!-- LA NUEVA MAGIA DE WHATSAPP ESTÁ AQUÍ -->
+    <!-- SCRIPT DEL COTIZADOR / WHATSAPP -->
     <script>
         document.getElementById('btn-cotizar').addEventListener('click', function() {
-            // Obtenemos todos los valores
             const origen = document.getElementById('origen').value.trim();
             const destino = document.getElementById('destino').value.trim();
             const fecha = document.getElementById('fecha').value;
-            
-            // Obtenemos el texto de la opción de pasajeros seleccionada
             const selectPasajeros = document.getElementById('pasajeros');
             const pasajerosTexto = selectPasajeros.options[selectPasajeros.selectedIndex].text;
-            
             const cajaResultado = document.getElementById('resultado-cotizacion');
 
-            // Validamos que llenen origen, destino y fecha
             if (origen === '' || destino === '' || fecha === '') {
                 cajaResultado.style.display = 'block';
                 cajaResultado.style.backgroundColor = '#3b1c1e';
@@ -205,17 +247,10 @@
             cajaResultado.innerHTML = '⏳ Calculando la mejor ruta y tarifa para ti...';
 
             setTimeout(function() {
-                // Precio simulado
                 const precioBase = Math.floor(Math.random() * (2500 - 800 + 1)) + 800;
-                
-                // === CONSTRUIMOS EL MENSAJE PARA WHATSAPP ===
-                // %0A significa "Enter" o salto de línea en una URL
                 const mensaje = `Hola MVP Executive 🚘%0A%0AMe interesa reservar un viaje con los siguientes detalles:%0A📍 *Origen:* ${origen}%0A🏁 *Destino:* ${destino}%0A📅 *Fecha:* ${fecha}%0A👥 *Vehículo:* ${pasajerosTexto}%0A💵 *Tarifa Estimada:* $${precioBase} MXN%0A%0A¿Podemos confirmar disponibilidad?`;
-                
-                // Creamos el enlace de WhatsApp (aquí pones el número real de la empresa)
                 const urlWhatsapp = `https://wa.me/5215555555555?text=${mensaje}`;
 
-                // Mostramos el resultado con el nuevo botón
                 cajaResultado.style.backgroundColor = '#1e3323';
                 cajaResultado.style.color = '#90ee90';
                 cajaResultado.style.border = '1px solid #28a745';
@@ -223,7 +258,6 @@
                     ✅ <strong>¡Ruta Calculada!</strong><br>
                     El costo estimado es de <span style="font-size: 1.4rem; color: #D4AF37;">$${precioBase} MXN</span>.<br>
                     
-                    <!-- BOTÓN DE WHATSAPP INTEGRADO -->
                     <a href="${urlWhatsapp}" target="_blank" style="display: inline-block; margin-top: 15px; padding: 12px 25px; background: #25D366; color: #fff; text-decoration: none; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 15px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); transition: background 0.3s;">
                         <i class="fab fa-whatsapp" style="font-size: 18px; margin-right: 5px;"></i> Reservar por WhatsApp
                     </a>
